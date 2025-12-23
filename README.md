@@ -1,4 +1,4 @@
-# RepoRank RAG Agent
+# Repo Classifier RAG Agent
 
 A RAG-based GitHub repository classifier designed for the machine-to-machine economy. Autonomous agents can submit GitHub repository URLs and receive semantic categorization powered by historical precedents and LLM synthesis.
 
@@ -78,7 +78,7 @@ uv run repo-classifier-ingest --input data/taxonomy.json
 docker-compose up --build
 
 # Ingest taxonomy data (first time only)
-docker-compose exec reporank uv run repo-classifier-ingest --input data/taxonomy.json
+docker-compose exec repo_classifier uv run repo-classifier-ingest --input data/taxonomy.json
 ```
 
 ## API Usage

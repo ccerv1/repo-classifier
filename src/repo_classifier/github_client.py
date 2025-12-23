@@ -45,7 +45,7 @@ class GitHubClient:
         """Build request headers with optional auth token."""
         headers = {
             "Accept": "application/vnd.github.v3+json",
-            "User-Agent": "RepoRank-Agent/1.0",
+            "User-Agent": "Repo Classifier-Agent/1.0",
         }
         if settings.github_token:
             headers["Authorization"] = f"Bearer {settings.github_token}"

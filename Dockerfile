@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
-# RepoRank RAG Agent - Production Dockerfile
+# Repo Classifier RAG Agent - Production Dockerfile
 # Uses uv for fast dependency management
 
 FROM python:3.11-slim
 
-LABEL maintainer="RepoRank Team"
+LABEL maintainer="Repo Classifier Team"
 LABEL description="RAG-based GitHub repository classifier with x402 payment gating"
 LABEL version="1.0.0"
 

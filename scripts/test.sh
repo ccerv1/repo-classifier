@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# RepoRank API Test Script
+# Repo Classifier API Test Script
 # Tests the /analyze endpoint with various repositories
 
 set -e
@@ -14,7 +14,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 echo -e "${BLUE}================================================${NC}"
-echo -e "${BLUE}  RepoRank RAG Agent - API Test Suite${NC}"
+echo -e "${BLUE}  Repo Classifier RAG Agent - API Test Suite${NC}"
 echo -e "${BLUE}================================================${NC}"
 echo ""
 

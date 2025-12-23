@@ -1,8 +1,8 @@
-# RepoRank RAG Agent - Docker Compose Configuration
+# Repo Classifier RAG Agent - Docker Compose Configuration
 # For local development and simple deployment
 
 services:
-  reporank:
+  repo_classifier:
     build:
       context: .
       dockerfile: Dockerfile

@@ -1,5 +1,5 @@
 """
-RepoRank RAG Agent
+Repo Classifier RAG Agent
 
 A RAG-based GitHub repository classifier with x402 payment gating.
 """

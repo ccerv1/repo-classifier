@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [
-    { name = "RepoRank Team" }
+    { name = "Repo Classifier Team" }
 ]
 keywords = ["github", "classifier", "rag", "llm", "openai", "fastapi"]
 

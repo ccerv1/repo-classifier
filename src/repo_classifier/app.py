@@ -1,5 +1,5 @@
 """
-RepoRank RAG Agent - FastAPI Application
+Repo Classifier RAG Agent - FastAPI Application
 
 A RAG-based GitHub repository classifier with x402 payment gating.
 """
@@ -225,7 +225,7 @@ class PaymentRequiredResponse(BaseModel):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan manager."""
-    print("🚀 Starting RepoRank RAG Agent...", flush=True)
+    print("🚀 Starting Repo Classifier RAG Agent...", flush=True)
     print(f"   Free tier: {settings.free_tier_requests} requests per {settings.rate_limit_window}s", flush=True)
     print(f"   Price: ${settings.price_per_request} per request", flush=True)
     print(f"   ChromaDB: {settings.chroma_db_path}", flush=True)
@@ -242,7 +242,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="RepoRank RAG Agent",
+    title="Repo Classifier RAG Agent",
     description="RAG-based GitHub repository classifier with x402 payment gating",
     version="1.0.0",
     lifespan=lifespan,
@@ -371,7 +371,7 @@ async def root():
     rag_store = get_rag_store()
     
     return {
-        "service": "RepoRank RAG Agent",
+        "service": "Repo Classifier RAG Agent",
         "version": "1.0.0",
         "status": "ready",
         "rag_store": {

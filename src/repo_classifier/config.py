@@ -1,5 +1,5 @@
 """
-Configuration management for RepoRank RAG Agent.
+Configuration management for Repo Classifier RAG Agent.
 Uses pydantic-settings to load from environment variables and .env file.
 """
 
