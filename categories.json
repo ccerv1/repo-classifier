@@ -1,0 +1,21 @@
+{
+  "categories": {
+    "labels": [
+      "This is a data science or machine learning project involving data analysis, statistics, AI models, or scientific computing",
+      "This is a web development project for building websites, web applications, or web services",
+      "This is a DevOps or infrastructure project for deployment, CI/CD, containerization, or system administration",
+      "This is a mobile app development project for iOS, Android, or cross-platform mobile applications",
+      "This is a security or cryptography project for encryption, authentication, vulnerability analysis, or security tools",
+      "This is a game development project for creating video games or game engines"
+    ],
+    "short_names": {
+      "This is a data science or machine learning project involving data analysis, statistics, AI models, or scientific computing": "Data Science & Machine Learning",
+      "This is a web development project for building websites, web applications, or web services": "Web Development",
+      "This is a DevOps or infrastructure project for deployment, CI/CD, containerization, or system administration": "DevOps & Infrastructure",
+      "This is a mobile app development project for iOS, Android, or cross-platform mobile applications": "Mobile App Development",
+      "This is a security or cryptography project for encryption, authentication, vulnerability analysis, or security tools": "Security & Cryptography",
+      "This is a game development project for creating video games or game engines": "Game Development"
+    }
+  }
+}
+
