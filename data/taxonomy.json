@@ -1,0 +1,570 @@
+{
+  "repositories": [
+    {
+      "url": "https://github.com/0xHabitat/sourcify",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/Aaditya1273/KaiaSIPS",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/Al-Qa-qa/cryptosupport-interface",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/DALHOUM-Ahmed/Eviral",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/DamianCryptoBoi/bridge",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/FroganBee/Pumpfun-smart-contract-BNB",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/KelvinThai/demo",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/Nodroid7/AtoDefiDash",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/TheRealDevv1/nft-1",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/alfredolopez80/curso-practica1",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/bajiadev/coin-action-web",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/canyacoin/canyadao",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/d4rk4444/withdraw-to-subwallet",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/fruitbox12/ndoes",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/kostiantyn98x/safemoonswap",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/mirza-sync/connect-metamask",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/nikola43/nftguild",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/notableBlock/notableBlock-blockchain",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/sa-five/Metaverse-ERC20TOKEN",
+      "category": "BNB Chain"
+    },
+    {
+      "url": "https://github.com/zypher-game/opbnb",
+      "category": "BNB Chain"
+    },
+
+    {
+      "url": "https://github.com/CodeIGuess/thingsForCode",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/ErlendAHall/granaryalert",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/HammadM2003/ProductBot1",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/JWebCoder/mith",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/JoshAtticus/Meowold",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/Samantha-uk/zzd-testing",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/Yakiyo/nekos-best-deno",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/apav-dev/fetch-movies-connector",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/denoland/deno_task_shell",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/hazae41/morax",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/hermy991/UrlSwitch",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/jserovs/deno_csv",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/ljcp/arca-edge-functions",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/louisfoster/sortition",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/martial-plains/deno-algorithms",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/octokit/octokit-next.js",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/raul-meunann/sticker-website",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/survivejs/sidewind",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/wireapp/jira-broadcast",
+      "category": "Deno"
+    },
+    {
+      "url": "https://github.com/yendenikhil/aoc2019",
+      "category": "Deno"
+    },
+
+    {
+      "url": "https://github.com/BoredMemes/BoredMemes-SmartContract",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/EasyDeduce/PQC_Agritrust",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/FahymabdElfattah/EcoDrive",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/Gift-Win/gift-v1",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/Jairo852016/Smart_Contracts",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/Mr-Rovilay/web3",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/SamkitSoni/Inchano",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/TheRavenFile/Daily-Hunt",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/Vinayak-RZ/Chains-Of-Eternity-Starknet",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/alessandromaci/umbrella",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/fanyinghao/TokenExchangeContract",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/flashbots/meta-clang",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/kieranmakes/web3-smartcontract-lottery",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/mchristou/ethereum-handshake",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/mitej23/first-NFT-project",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/piyushgitelive/KRYPT_APP",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/roswelly/Avalanche-Volume-Bot",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/singhyash05/VerdiFi",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/victortanzy123/Ethereum-NFTs",
+      "category": "Ethereum"
+    },
+    {
+      "url": "https://github.com/vidhanarya/DAO",
+      "category": "Ethereum"
+    },
+
+    {
+      "url": "https://github.com/AdrianCobo/hardhat-play",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/Nadai2010/Nadai-Marketplace-Workshop-Chainlink",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/Nilomiranda/dapp",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/Tradegen/asset-management-v2",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/arnezt/bep20-generator",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/code-423n4/2023-12-autonolas",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/codinghistorian/ERC20Upgradeable_TransparentProxy_Metis",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/elysium-system/elysium-shell-contracts",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/ercwangwh/SimpleStorage",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/eshaben/local-squid-demo",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/josidbobo/ElectionDapp",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/jyse/next-jessy-nft-generator",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/kamalbuilds/treasure-hunting-on-scroll",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/kevinorin/bgn-front",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/memebookprotocol/meme_smartcontracts",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/nishitchittora/erc20-payment-dapp",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/prathmeshaghao/samplenftproj",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/simon-something/10mNFT",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/tse-lao/hackathon-fvm",
+      "category": "Hardhat"
+    },
+    {
+      "url": "https://github.com/wiztemple/web3-helloworld",
+      "category": "Hardhat"
+    },
+
+    {
+      "url": "https://github.com/AlexMercerWeb/nft-test",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/Brianspha/UNICEF-Blockchain-Project",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/CryptoUnchained/Tokenary",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/Hemakasen007/Whitelist-Dapp",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/LeverDEX/leverdex-app",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/MetaPolisGroup/1988dragon-marketplace",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/MoonSHRD/TelegramNFTMarketplace",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/Moxerit/blockchain_blog",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/OrderAndCh4oS/drone-squadron-elite",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/TechGeorgii/ethers.js-performance",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/aliarbak/go-ethereum-aws-kms-wallet-provider",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/eduairet/collectible-pleasures",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/garbageOrg/NFT-Ticketing---Smart-contract",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/hovgor/web3_project",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/justchillinghere/dao",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/linda-row/hulufund-smartcontract",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/longdh210/ChainBridgeUI",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/pnetwork-association/ptokens-dapp",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/reddyismav/flash-loan-swap",
+      "category": "Polygon"
+    },
+    {
+      "url": "https://github.com/yq0810/metamask-extension",
+      "category": "Polygon"
+    },
+
+    {
+      "url": "https://github.com/JaniM/effects",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/K-JBoon/rusty-locks",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/Pirlo220/guessing-game",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/apoelstra/ots-viewer",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/bmilanov/timeledger",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/daschl/adafruit-nrf52840-express",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/daschl/sdkchecker",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/elbaro/ps-util",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/encointer/pallet-encointer-ceremonies",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/ghglavan/random_service",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/jfbilodeau/rust_new_neu",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/jjmax75/rust_twelve_days_christmas",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/kaikalii/the-grand-simulation",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/mitsuhiko/dp3tsrv",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/pwoolcoc/jsonfeed",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/silasburger/fahrenheit-celsius-converter",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/smolkov/setup-ws",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/threnody96/rgengine-sqlite-storage",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/zen3ger/muzq",
+      "category": "Rust"
+    },
+    {
+      "url": "https://github.com/zombieCraig/rust_msf_relay",
+      "category": "Rust"
+    },
+
+    {
+      "url": "https://github.com/0xBraunGuy/test-aob-v4",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/DAKTProjects/solana",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/DappStarter/gentle-sepehu-BqRn",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/DappStarter/pleasant-idedour-DnBM",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/Fair-Exchange/safecoin_tools",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/JesseKuntz/ledger-live",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/Leeyah-123/solana-blog-dapp",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/NDKhoa1307/pokart",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/RReaper6464/try",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/SOL-Strategies/solana-validator-exporter",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/codeaudit/neon-evm",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/desakash/Hackoverflow",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/jacobcreech/wallet-adapter",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/mhoneyonsol/Predict",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/miqua2308/projectHackathon",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/omgbbqhaxx/Rust-Solana-Tutorial",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/shafiankhan/JupiTrade",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/solana-developers/CRUD-dApp",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/solana-turbin3/Q3_25_Builder_AnkitDhadiwal",
+      "category": "Solana"
+    },
+    {
+      "url": "https://github.com/zklambda/shinto",
+      "category": "Solana"
+    }
+  ]
+}

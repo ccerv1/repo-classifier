@@ -1,0 +1,50 @@
+# RepoRank RAG Agent - Docker Compose Configuration
+# For local development and simple deployment
+
+services:
+  reporank:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    ports:
+      - "8000:8000"
+    
+    environment:
+      # Required
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      
+      # Optional - higher GitHub API rate limits
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      
+      # Optional - enables x402 payment
+      - WALLET_ADDRESS=${WALLET_ADDRESS:-}
+      
+      # Pricing configuration
+      - FREE_TIER_ENABLED=${FREE_TIER_ENABLED:-true}
+      - FREE_TIER_REQUESTS=${FREE_TIER_REQUESTS:-5}
+      - PRICE_PER_REQUEST=${PRICE_PER_REQUEST:-0.02}
+      
+      # Performance
+      - CACHE_TTL_SECONDS=${CACHE_TTL_SECONDS:-3600}
+      - README_MAX_CHARS=${README_MAX_CHARS:-8000}
+      
+      # ChromaDB path (inside container)
+      - CHROMA_DB_PATH=/app/data/chroma_db
+    
+    volumes:
+      # Persist ChromaDB data
+      - chroma_data:/app/data/chroma_db
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  chroma_data:
+    driver: local

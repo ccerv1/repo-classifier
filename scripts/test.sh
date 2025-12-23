@@ -1,81 +1,115 @@
-#!/bin/bash
-# Quick test script for repo-classifier API
-# 
-# To test different repositories, edit the TEST_REPOS array below
+#!/usr/bin/env bash
+# RepoRank API Test Script
+# Tests the /analyze endpoint with various repositories
 
-API_URL="http://localhost:8000"
+set -e
 
-# Edit this array to test different repositories
-# Format: "https://github.com/owner/repo"
-TEST_REPOS=(
-  "https://github.com/pandas-dev/pandas"                    # Data Science
-  "https://github.com/vercel/next.js"                       # Web Development
-  "https://github.com/kubernetes/kubernetes"                # DevOps
-  "https://github.com/android/nowinandroid"                 # Mobile App Development
-  "https://github.com/pytorch/pytorch"                      # Data Science
+BASE_URL="${BASE_URL:-http://localhost:8000}"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}================================================${NC}"
+echo -e "${BLUE}  RepoRank RAG Agent - API Test Suite${NC}"
+echo -e "${BLUE}================================================${NC}"
+echo ""
+
+# Test repositories (url|expected_category)
+TEST_CASES=(
+  "https://github.com/solana-labs/solana|Solana"
+  "https://github.com/tokio-rs/tokio|Rust"
+  "https://github.com/foundry-rs/foundry|Ethereum"
+  "https://github.com/denoland/deno|Deno"
+  "https://github.com/pancakeswap/pancake-frontend|BNB Chain"
+  "https://github.com/maticnetwork/matic.js|Polygon"
 )
 
-echo "🚀 Testing Repository Classifier API"
-echo "====================================="
+# Categories to send with each request
+CATEGORIES='{
+  "BNB Chain": "Binance Smart Chain and BNB ecosystem projects",
+  "Deno": "Deno runtime, TypeScript/JavaScript server-side projects",
+  "Ethereum": "Ethereum blockchain, EVM, smart contracts, and DeFi",
+  "Hardhat": "Hardhat development framework and tooling projects",
+  "Polygon": "Polygon network and Layer 2 scaling solutions",
+  "Rust": "Rust programming language libraries and tools",
+  "Solana": "Solana blockchain, programs, and ecosystem tools"
+}'
+
+# Health check
+echo -e "${YELLOW}1. Health Check${NC}"
+echo "   GET ${BASE_URL}/"
+HEALTH=$(curl -s "${BASE_URL}/")
+echo "   Response: ${HEALTH}" | head -c 200
+echo ""
 echo ""
 
-# Test 1: Health check
-echo "1️⃣  Testing health check..."
-curl -s "$API_URL/" | jq '.'
-echo ""
-echo ""
-
-# Test 2: Free tier (first 5 requests)
-echo "2️⃣  Testing FREE TIER (first 5 requests with different repositories)..."
-for i in {1..5}; do
-  # Use modulo to cycle through repos if we have fewer than 5
-  repo_index=$(( (i - 1) % ${#TEST_REPOS[@]} ))
-  repo_url="${TEST_REPOS[$repo_index]}"
-  
-  echo "   Request $i: $repo_url"
-  response=$(curl -s -w "\n%{http_code}" -X POST "$API_URL/classify" \
-    -H "Content-Type: application/json" \
-    -d "{\"repo_url\": \"$repo_url\"}")
-  
-  http_code=$(echo "$response" | tail -1)
-  body=$(echo "$response" | sed '$d')
-  
-  if [ "$http_code" = "200" ]; then
-    echo "$body" | jq '{status, category, confidence, rate_limit_remaining}'
-  else
-    echo "   ❌ HTTP $http_code"
-    echo "$body" | jq '.'
-  fi
+# Check RAG store status
+RAG_COUNT=$(echo "$HEALTH" | grep -o '"repositories":[0-9]*' | grep -o '[0-9]*' || echo "0")
+if [ "$RAG_COUNT" = "0" ]; then
+  echo -e "${RED}   ⚠ RAG store is empty! Run: uv run reporank-ingest --input data/taxonomy.json${NC}"
   echo ""
-  
-  sleep 1  # Small delay between requests
-done
-
-echo ""
-echo "3️⃣  Testing 6th request (should require PAYMENT - 402 response)..."
-# Use the first repo for the payment test
-response=$(curl -s -w "\n%{http_code}" -X POST "$API_URL/classify" \
-  -H "Content-Type: application/json" \
-  -d "{\"repo_url\": \"${TEST_REPOS[0]}\"}")
-
-http_code=$(echo "$response" | tail -1)
-body=$(echo "$response" | sed '$d')
-
-if [ "$http_code" = "402" ]; then
-  echo "   ✅ Correctly returned HTTP 402 (Payment Required)"
-  echo "$body" | jq '.'
-else
-  echo "   ⚠️  Expected HTTP 402, got HTTP $http_code"
-  echo "$body" | jq '.'
 fi
 
+# Test each repository
+echo -e "${YELLOW}2. Testing Repository Analysis${NC}"
 echo ""
-echo "4️⃣  Checking rate limit headers..."
-curl -s -v -X POST "$API_URL/classify" \
-  -H "Content-Type: application/json" \
-  -d "{\"repo_url\": \"${TEST_REPOS[0]}\"}" 2>&1 | \
-  grep -i "x-ratelimit" | head -5
 
+PASSED=0
+FAILED=0
+
+for test_case in "${TEST_CASES[@]}"; do
+  # Split on pipe
+  url="${test_case%%|*}"
+  expected="${test_case##*|}"
+  repo_name=$(echo "$url" | sed 's|https://github.com/||')
+  
+  echo -e "   ${BLUE}Testing: ${repo_name}${NC}"
+  echo "   Expected category: ${expected}"
+  
+  START=$(date +%s)
+  
+  RESPONSE=$(curl -s -X POST "${BASE_URL}/analyze" \
+    -H "Content-Type: application/json" \
+    -d "{\"url\": \"${url}\", \"categories\": ${CATEGORIES}}" 2>&1)
+  
+  END=$(date +%s)
+  DURATION=$((END - START))
+  
+  # Extract category from response
+  CATEGORY=$(echo "$RESPONSE" | grep -o '"category":"[^"]*"' | head -1 | sed 's/"category":"//;s/"//')
+  CONFIDENCE=$(echo "$RESPONSE" | grep -o '"confidence":[0-9.]*' | head -1 | sed 's/"confidence"://')
+  
+  if [ -n "$CATEGORY" ]; then
+    if [ "$CATEGORY" = "$expected" ]; then
+      echo -e "   ${GREEN}✓ PASS${NC} - Category: ${CATEGORY} (confidence: ${CONFIDENCE})"
+      PASSED=$((PASSED + 1))
+    else
+      echo -e "   ${YELLOW}△ MISMATCH${NC} - Got: ${CATEGORY}, Expected: ${expected}"
+      FAILED=$((FAILED + 1))
+    fi
+  else
+    echo -e "   ${RED}✗ FAIL${NC} - No category returned"
+    echo "   Response: ${RESPONSE}" | head -c 200
+    FAILED=$((FAILED + 1))
+  fi
+  
+  echo "   Time: ${DURATION}s"
+  echo ""
+done
+
+# Summary
+echo -e "${BLUE}================================================${NC}"
+echo -e "${BLUE}  Summary${NC}"
+echo -e "${BLUE}================================================${NC}"
+echo -e "   Passed: ${GREEN}${PASSED}${NC}"
+echo -e "   Failed: ${RED}${FAILED}${NC}"
+echo -e "   Total:  $((PASSED + FAILED))"
 echo ""
-echo "✅ Testing complete!"
 
+if [ "$FAILED" -gt 0 ]; then
+  exit 1
+fi

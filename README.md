@@ -1,318 +1,240 @@
-# Repository Classifier API
+# RepoRank RAG Agent
 
-A FastAPI service that automatically classifies GitHub repositories into categories using zero-shot machine learning. Features a freemium model with 5 free requests per minute, then requires payment via x402 protocol for additional requests.
+A RAG-based GitHub repository classifier designed for the machine-to-machine economy. Autonomous agents can submit GitHub repository URLs and receive semantic categorization powered by historical precedents and LLM synthesis.
 
 ## Features
 
-- **Zero-Shot Classification**: Uses DeBERTa-v3 model for accurate repository categorization
-- **README Analysis**: Fetches and analyzes repository README files for better context
-- **Freemium Model**: 5 free requests per minute, then $0.01 USD per request via x402
-- **Rate Limiting**: Built-in rate limiting with clear headers
-- **RESTful API**: Both GET and POST endpoints with OpenAPI documentation
-- **Docker Ready**: Fully containerized and production-ready
+- **RAG Architecture**: Uses ChromaDB vector store with OpenAI embeddings to find similar repositories from a taxonomy dataset
+- **OpenAI Structured Outputs**: Guaranteed valid JSON responses using `response_format: json_schema`
+- **Async & Parallel**: Concurrent GitHub API calls and caching for optimal latency (<6s target)
+- **Flexible Categories**: User-defined categories per request
+- **x402 Payment Gating**: Optional payment enforcement via x402 protocol on Base network
+- **Freemium Model**: Configurable free tier with rate limiting
 
-## Categories
+## Project Structure
 
-Repositories are classified into one of these categories:
-- Data Science & Machine Learning
-- Web Development
-- DevOps & Infrastructure
-- Mobile App Development
-- Security & Cryptography
-- Game Development
+```
+repo-classifier/
+├── src/
+│   └── reporank/
+│       ├── __init__.py
+│       ├── app.py           # FastAPI application
+│       ├── config.py        # Environment configuration
+│       ├── cache.py         # TTL-based in-memory cache
+│       ├── github_client.py # Async GitHub REST API client
+│       ├── rag.py           # ChromaDB vector operations
+│       ├── analyzer.py      # OpenAI LLM synthesis
+│       └── ingest.py        # Taxonomy ingestion CLI
+├── data/
+│   └── taxonomy.json   # Your seed dataset
+├── scripts/
+│   └── test.sh              # API test script
+├── pyproject.toml           # Dependencies (uv)
+├── Dockerfile               # Production container
+├── docker-compose.yml       # Local development
+└── env.example              # Environment template
+```
 
 ## Quick Start
 
 ### Prerequisites
 
-- Docker and Docker Compose (optional)
-- A Base network wallet address (for payment functionality, optional for testing)
+- [uv](https://docs.astral.sh/uv/) (recommended) or pip
+- OpenAI API key
+- GitHub token (optional, for higher rate limits)
 
-### Build and Run
+### Installation
 
 ```bash
-# Build the Docker image
-docker build -t repo-classifier .
+# Clone the repository
+git clone https://github.com/yourusername/repo-classifier.git
+cd repo-classifier
 
-# Run the container
-docker run -p 8000:8000 -e MY_WALLET_ADDRESS=your_wallet_address repo-classifier
+# Install uv (if not already installed)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies
+uv sync
+
+# Create environment file
+cp env.example .env
+# Edit .env with your API keys
 ```
 
-**Note**: The model downloads on first run, which may take a few minutes. The app will still function without x402 (rate limiting works, but payment enforcement is disabled).
-
-### Test the API
+### Running Locally
 
 ```bash
-# Health check
-curl http://localhost:8000/
+# Start the server
+uv run reporank
 
-# Classify a repository (GET endpoint)
-curl "http://localhost:8000/classify?repo_url=https://github.com/pandas-dev/pandas"
+# In another terminal, ingest the taxonomy dataset
+uv run reporank-ingest --input data/taxonomy.json
+```
 
-# Classify a repository (POST endpoint)
-curl -X POST "http://localhost:8000/classify" \
+### Using Docker
+
+```bash
+# Build and run
+docker-compose up --build
+
+# Ingest taxonomy data (first time only)
+docker-compose exec reporank uv run reporank-ingest --input data/taxonomy.json
+```
+
+## API Usage
+
+### Analyze a Repository
+
+```bash
+curl -X POST http://localhost:8000/analyze \
   -H "Content-Type: application/json" \
-  -d '{"repo_url": "https://github.com/pandas-dev/pandas"}'
-```
-
-## API Documentation
-
-Once the server is running, interactive API documentation is available at:
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-### Endpoints
-
-#### `GET /`
-Health check endpoint (always free, no payment required).
-
-**Response:**
-```json
-{
-  "message": "Repository Classifier API",
-  "status": "ready",
-  "pricing": {
-    "free_tier": "5 requests per minute",
-    "paid_tier": "$0.01 USD per request (via x402)",
-    "note": "First 5 requests per minute are free. Beyond that, payment required."
-  },
-  "docs": "/docs",
-  "example": "/classify?repo_url=https://github.com/pandas-dev/pandas"
-}
-```
-
-#### `GET /classify?repo_url=<url>`
-Classify a repository via GET request (browser-friendly).
-
-**Parameters:**
-- `repo_url` (query string): GitHub repository URL
-
-#### `POST /classify`
-Classify a repository via POST request.
-
-**Request Body:**
-```json
-{
-  "repo_url": "https://github.com/pandas-dev/pandas"
-}
-```
-
-**Response:**
-```json
-{
-  "status": "Free Tier",
-  "category": "Data Science & Machine Learning",
-  "confidence": 0.40614697337150574,
-  "all_scores": {
-    "Data Science & Machine Learning": 0.40614697337150574,
-    "DevOps & Infrastructure": 0.16924525797367096,
-    "Mobile App Development": 0.15506191551685333,
-    "Web Development": 0.149778351187706,
-    "Game Development": 0.07861993461847305,
-    "Security & Cryptography": 0.04114754870533943
-  },
-  "repo_context": "Flexible and powerful data analysis / manipulation library for Python...",
-  "rate_limit_remaining": 4
-}
-```
-
-### Rate Limit Headers
-
-All `/classify` responses include rate limit information:
-
-- `X-RateLimit-Limit`: Maximum requests per minute (5)
-- `X-RateLimit-Remaining`: Remaining free requests in current window
-- `X-RateLimit-Status`: `free_tier` or `paid_required`
-
-### Payment (x402)
-
-When rate limit is exceeded, the API returns HTTP 402 with payment requirements:
-
-```json
-{
-  "x402Version": 1,
-  "accepts": [
-    {
-      "scheme": "exact",
-      "network": "base",
-      "maxAmountRequired": "10000",
-      "resource": "http://localhost:8000/classify",
-      "description": "Repository classification service",
-      "payTo": "0x...",
-      "maxTimeoutSeconds": 60
+  -d '{
+    "url": "https://github.com/solana-labs/solana",
+    "categories": {
+      "BNB Chain": "Binance Smart Chain and BNB ecosystem projects",
+      "Deno": "Deno runtime, TypeScript/JavaScript server-side projects",
+      "Ethereum": "Ethereum blockchain, EVM, smart contracts, and DeFi",
+      "Hardhat": "Hardhat development framework and tooling projects",
+      "Polygon": "Polygon network and Layer 2 scaling solutions",
+      "Rust": "Rust programming language libraries and tools",
+      "Solana": "Solana blockchain, programs, and ecosystem tools"
     }
+  }'
+```
+
+### Response
+
+```json
+{
+  "status": "success",
+  "data": {
+    "category": "Solana",
+    "confidence": 0.95,
+    "reasoning": "Repository is the core Solana blockchain implementation...",
+    "similar_precedents": [
+      "https://github.com/solana-developers/CRUD-dApp",
+      "https://github.com/jacobcreech/wallet-adapter"
+    ]
+  }
+}
+```
+
+### Health Check
+
+```bash
+curl http://localhost:8000/
+```
+
+## Configuration
+
+All configuration is via environment variables. See `env.example` for the full list.
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OPENAI_API_KEY` | OpenAI API key (required) | - |
+| `GITHUB_TOKEN` | GitHub token for higher rate limits | - |
+| `WALLET_ADDRESS` | x402 payment recipient address | - |
+| `FREE_TIER_ENABLED` | Enable free tier | `true` |
+| `FREE_TIER_REQUESTS` | Free requests per window | `5` |
+| `PRICE_PER_REQUEST` | USD price per request | `0.02` |
+| `CHROMA_DB_PATH` | ChromaDB storage path | `./data/chroma_db` |
+
+## Deployment
+
+### Railway
+
+1. Connect GitHub repo to Railway
+2. Set environment variables in dashboard
+3. Add volume: Mount path `/app/data/chroma_db`, Size 1GB
+4. Ingest data via Railway shell:
+   ```bash
+   uv run reporank-ingest --input data/taxonomy.json
+   ```
+
+### Render
+
+1. Create Web Service, select Docker environment
+2. Set environment variables
+3. Add Persistent Disk: Mount path `/app/data/chroma_db`
+4. Deploy and ingest via Render Shell
+
+## Taxonomy Dataset
+
+The RAG system requires a taxonomy dataset of repositories with known categories. Edit `data/taxonomy.json`:
+
+```json
+{
+  "repositories": [
+    {"url": "https://github.com/solana-labs/solana", "category": "Solana"},
+    {"url": "https://github.com/denoland/deno", "category": "Deno"},
+    {"url": "https://github.com/foundry-rs/foundry", "category": "Ethereum"}
   ]
 }
 ```
 
-Include the `X-PAYMENT` header with a valid payment token to proceed.
-
-## Configuration
-
-### Environment Variables
-
-- `MY_WALLET_ADDRESS` (optional): Base network wallet address to receive payments. If not set, payment functionality is disabled but rate limiting still works.
-
-### Rate Limiting
-
-- **Free Tier**: 5 requests per minute per IP address
-- **Window**: 60-second sliding window
-- **Tracking**: In-memory (resets on container restart)
-
-## Pricing Model
-
-1. **Free Tier**: First 5 requests per minute are free
-2. **Paid Tier**: $0.01 USD per request via x402 protocol on Base network
-
-Rate limits are tracked per IP address using a sliding window algorithm.
-
-## Examples
-
-### Test Free Tier
-
+Ingest after changes:
 ```bash
-# Make 5 requests (all free)
-for i in {1..5}; do
-  curl -X POST "http://localhost:8000/classify" \
-    -H "Content-Type: application/json" \
-    -d '{"repo_url": "https://github.com/pandas-dev/pandas"}' \
-    | jq '{status, category, confidence, rate_limit_remaining}'
-  sleep 1
-done
+uv run reporank-ingest --input data/taxonomy.json --clear
 ```
 
-### Test Different Repository Types
+## CLI Commands
 
 ```bash
-# Data Science repo
-curl -X POST "http://localhost:8000/classify" \
-  -H "Content-Type: application/json" \
-  -d '{"repo_url": "https://github.com/pandas-dev/pandas"}'
+# Start the API server
+uv run reporank
 
-# Web Development repo
-curl -X POST "http://localhost:8000/classify" \
-  -H "Content-Type: application/json" \
-  -d '{"repo_url": "https://github.com/vercel/next.js"}'
+# Ingest taxonomy data
+uv run reporank-ingest --input data/taxonomy.json
 
-# DevOps repo
-curl -X POST "http://localhost:8000/classify" \
-  -H "Content-Type: application/json" \
-  -d '{"repo_url": "https://github.com/kubernetes/kubernetes"}'
-```
+# Clear and re-ingest
+uv run reporank-ingest --input data/taxonomy.json --clear
 
-### Check Rate Limit Headers
-
-```bash
-curl -v -X POST "http://localhost:8000/classify" \
-  -H "Content-Type: application/json" \
-  -d '{"repo_url": "https://github.com/pandas-dev/pandas"}' 2>&1 | grep -i "x-ratelimit"
-```
-
-### Test Error Handling
-
-```bash
-# Invalid URL
-curl -X POST "http://localhost:8000/classify" \
-  -H "Content-Type: application/json" \
-  -d '{"repo_url": "not-a-valid-url"}'
-
-# Non-existent repository
-curl -X POST "http://localhost:8000/classify" \
-  -H "Content-Type: application/json" \
-  -d '{"repo_url": "https://github.com/nonexistent/user/repo"}'
+# Quiet mode (no progress output)
+uv run reporank-ingest --input data/taxonomy.json --quiet
 ```
 
 ## Testing
 
-A test script is provided in `scripts/test.sh`:
-
 ```bash
+# Run test script
 chmod +x scripts/test.sh
 ./scripts/test.sh
+
+# Or test manually
+curl -X POST http://localhost:8000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://github.com/denoland/deno", "categories": {"Deno": "Deno runtime", "Rust": "Rust projects"}}'
 ```
-
-This script tests:
-- Health check endpoint
-- Free tier requests (5 requests)
-- Rate limiting (6th request requiring payment)
-- Rate limit headers
-
-## Development
-
-### Project Structure
-
-```
-repo-classifier/
-├── app.py                 # Main application file
-├── categories.json        # Category definitions (customizable)
-├── requirements.txt       # Python dependencies
-├── Dockerfile            # Docker container definition
-├── .dockerignore         # Docker ignore patterns
-├── .gitignore           # Git ignore patterns
-├── README.md            # This file
-└── scripts/
-    └── test.sh          # Test script with configurable repositories
-```
-
-### Customizing Categories
-
-Edit `categories.json` to customize the classification categories. The file contains:
-- `labels`: Full descriptive labels for the zero-shot model
-- `short_names`: Short names for API responses
-
-After modifying `categories.json`, rebuild the Docker image for changes to take effect.
-
-### Customizing Test Repositories
-
-Edit `scripts/test.sh` and modify the `TEST_REPOS` array to test different repositories:
-
-```bash
-TEST_REPOS=(
-  "https://github.com/your-org/your-repo"
-  "https://github.com/another-org/another-repo"
-  # Add more repositories here
-)
-```
-
-### Local Development
-
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the application:
-   ```bash
-   python app.py
-   ```
-   Or using uvicorn directly:
-   ```bash
-   uvicorn app:app --host 0.0.0.0 --port 8000 --reload
-   ```
-
-### Dependencies
-
-- **FastAPI**: Modern web framework for building APIs
-- **transformers**: Hugging Face transformers library
-- **torch**: PyTorch for ML model inference
-- **x402**: Payment protocol implementation
-- **requests**: HTTP client for GitHub API
-- **uvicorn**: ASGI server
 
 ## Architecture
 
-The application uses:
-- **Zero-shot classification** with DeBERTa-v3 model for categorization
-- **Sliding window rate limiting** for free tier management
-- **x402 protocol** for payment processing
-- **FastAPI middleware** for rate limiting and payment settlement
-- **In-memory rate limit tracking** (per-IP address)
+```
+┌─────────────┐     ┌──────────────────────────────────────────────────┐
+│   Client    │────▶│  FastAPI + x402 Middleware                       │
+│  (AI Agent) │     │                                                  │
+└─────────────┘     │  ┌──────────────────┐  ┌─────────────────────┐  │
+                    │  │ GitHub REST API  │  │ ChromaDB (RAG)      │  │
+                    │  │ - File tree      │  │ - Taxonomy          │  │
+                    │  │ - README         │  │ - k=3 neighbors     │  │
+                    │  │ - Parallel fetch │  │ - Embeddings        │  │
+                    │  └────────┬─────────┘  └──────────┬──────────┘  │
+                    │           │                       │              │
+                    │           ▼                       ▼              │
+                    │  ┌────────────────────────────────────────────┐  │
+                    │  │         OpenAI gpt-4o-mini                 │  │
+                    │  │   (Structured Output: json_schema)         │  │
+                    │  └────────────────────────────────────────────┘  │
+                    └──────────────────────────────────────────────────┘
+```
+
+## Performance Targets
+
+| Metric | Target |
+|--------|--------|
+| Latency | < 6 seconds |
+| Cost per request | < $0.005 |
+| Accuracy | > 92% |
 
 ## License
 
-[Add your license here]
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
+MIT
