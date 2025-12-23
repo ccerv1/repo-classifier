@@ -16,7 +16,7 @@ A RAG-based GitHub repository classifier designed for the machine-to-machine eco
 ```
 repo-classifier/
 ├── src/
-│   └── reporank/
+│   └── repo_classifier/
 │       ├── __init__.py
 │       ├── app.py           # FastAPI application
 │       ├── config.py        # Environment configuration
@@ -65,10 +65,10 @@ cp env.example .env
 
 ```bash
 # Start the server
-uv run reporank
+uv run repo-classifier
 
 # In another terminal, ingest the taxonomy dataset
-uv run reporank-ingest --input data/taxonomy.json
+uv run repo-classifier-ingest --input data/taxonomy.json
 ```
 
 ### Using Docker
@@ -78,7 +78,7 @@ uv run reporank-ingest --input data/taxonomy.json
 docker-compose up --build
 
 # Ingest taxonomy data (first time only)
-docker-compose exec reporank uv run reporank-ingest --input data/taxonomy.json
+docker-compose exec reporank uv run repo-classifier-ingest --input data/taxonomy.json
 ```
 
 ## API Usage
@@ -148,7 +148,7 @@ All configuration is via environment variables. See `env.example` for the full l
 3. Add volume: Mount path `/app/data/chroma_db`, Size 1GB
 4. Ingest data via Railway shell:
    ```bash
-   uv run reporank-ingest --input data/taxonomy.json
+   uv run repo-classifier-ingest --input data/taxonomy.json
    ```
 
 ### Render
@@ -174,23 +174,23 @@ The RAG system requires a taxonomy dataset of repositories with known categories
 
 Ingest after changes:
 ```bash
-uv run reporank-ingest --input data/taxonomy.json --clear
+uv run repo-classifier-ingest --input data/taxonomy.json --clear
 ```
 
 ## CLI Commands
 
 ```bash
 # Start the API server
-uv run reporank
+uv run repo-classifier
 
 # Ingest taxonomy data
-uv run reporank-ingest --input data/taxonomy.json
+uv run repo-classifier-ingest --input data/taxonomy.json
 
 # Clear and re-ingest
-uv run reporank-ingest --input data/taxonomy.json --clear
+uv run repo-classifier-ingest --input data/taxonomy.json --clear
 
 # Quiet mode (no progress output)
-uv run reporank-ingest --input data/taxonomy.json --quiet
+uv run repo-classifier-ingest --input data/taxonomy.json --quiet
 ```
 
 ## Testing

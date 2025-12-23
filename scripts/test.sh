@@ -50,7 +50,7 @@ echo ""
 # Check RAG store status
 RAG_COUNT=$(echo "$HEALTH" | grep -o '"repositories":[0-9]*' | grep -o '[0-9]*' || echo "0")
 if [ "$RAG_COUNT" = "0" ]; then
-  echo -e "${RED}   ⚠ RAG store is empty! Run: uv run reporank-ingest --input data/taxonomy.json${NC}"
+  echo -e "${RED}   ⚠ RAG store is empty! Run: uv run repo-classifier-ingest --input data/taxonomy.json${NC}"
   echo ""
 fi
 

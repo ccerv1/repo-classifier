@@ -6,8 +6,8 @@ Parses a JSON file of repositories with known categories and populates
 the ChromaDB vector store for RAG-based classification.
 
 Usage:
-    uv run reporank-ingest --input data/taxonomy.json
-    uv run reporank-ingest --input data/taxonomy.json --clear
+    uv run repo-classifier-ingest --input data/taxonomy.json
+    uv run repo-classifier-ingest --input data/taxonomy.json --clear
 """
 
 import argparse
@@ -16,9 +16,9 @@ import json
 import sys
 from pathlib import Path
 
-from reporank.config import settings
-from reporank.github_client import GitHubClient
-from reporank.rag import RAGStore
+from repo_classifier.config import settings
+from repo_classifier.github_client import GitHubClient
+from repo_classifier.rag import RAGStore
 
 
 async def ingest_repositories(
@@ -145,9 +145,9 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  uv run reporank-ingest --input data/taxonomy.json
-  uv run reporank-ingest --input data/taxonomy.json --clear
-  uv run reporank-ingest --input data/taxonomy.json --quiet
+  uv run repo-classifier-ingest --input data/taxonomy.json
+  uv run repo-classifier-ingest --input data/taxonomy.json --clear
+  uv run repo-classifier-ingest --input data/taxonomy.json --quiet
 
 Expected JSON format:
 {

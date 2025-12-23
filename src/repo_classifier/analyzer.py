@@ -6,9 +6,9 @@ Synthesizes classification from evidence and historical precedents.
 from openai import AsyncOpenAI
 from pydantic import BaseModel, Field
 
-from reporank.config import settings
-from reporank.github_client import RepoEvidence
-from reporank.rag import Precedent
+from repo_classifier.config import settings
+from repo_classifier.github_client import RepoEvidence
+from repo_classifier.rag import Precedent
 
 
 class AnalysisResult(BaseModel):

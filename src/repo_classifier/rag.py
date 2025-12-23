@@ -9,8 +9,8 @@ from dataclasses import dataclass
 import chromadb
 from openai import AsyncOpenAI
 
-from reporank.cache import embedding_cache
-from reporank.config import settings
+from repo_classifier.cache import embedding_cache
+from repo_classifier.config import settings
 
 
 @dataclass

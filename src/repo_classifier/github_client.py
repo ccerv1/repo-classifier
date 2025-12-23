@@ -11,8 +11,8 @@ from urllib.parse import urlparse
 
 import httpx
 
-from reporank.cache import github_cache
-from reporank.config import settings
+from repo_classifier.cache import github_cache
+from repo_classifier.config import settings
 
 
 @dataclass

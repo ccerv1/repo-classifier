@@ -16,10 +16,10 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from reporank.analyzer import Analyzer, AnalysisResult
-from reporank.config import settings
-from reporank.github_client import GitHubClient, github_client
-from reporank.rag import get_rag_store
+from repo_classifier.analyzer import Analyzer, AnalysisResult
+from repo_classifier.config import settings
+from repo_classifier.github_client import GitHubClient, github_client
+from repo_classifier.rag import get_rag_store
 
 # ============================================================================
 # x402 Payment Integration (optional)
